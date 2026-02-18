@@ -42,47 +42,70 @@ const Counter = ({ target, suffix }: { target: number; suffix: string }) => {
 };
 
 const WhyChooseUs = () => (
-  <section id="why-us" className="py-24 md:py-32">
+  <section className="py-24 md:py-32 relative overflow-hidden">
     <div className="container mx-auto px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-center mb-16"
-      >
-        <p className="text-primary font-medium tracking-widest uppercase text-sm mb-3">Why Glowison</p>
-        <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground">Why Choose Us</h2>
-      </motion.div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        {/* Left: content */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+        >
+          <p className="text-primary font-medium tracking-widest uppercase text-sm mb-3">Why Glowison</p>
+          <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-8 leading-tight">
+            Why Choose <span className="text-gradient">Us?</span>
+          </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-        {highlights.map((h, i) => (
-          <motion.div
-            key={h.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1 }}
-            className="text-center p-6"
-          >
-            <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-              <h.icon className="w-7 h-7 text-primary" />
-            </div>
-            <h3 className="font-heading font-semibold text-lg text-foreground mb-2">{h.title}</h3>
-            <p className="text-muted-foreground text-sm">{h.desc}</p>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Counters */}
-      <div className="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-20">
-        {stats.map((stat) => (
-          <div key={stat.label} className="text-center">
-            <div className="font-heading text-5xl md:text-6xl font-bold text-gradient mb-2">
-              <Counter target={stat.value} suffix={stat.suffix} />
-            </div>
-            <p className="text-muted-foreground font-medium text-sm uppercase tracking-wider">{stat.label}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {highlights.map((h, i) => (
+              <motion.div
+                key={h.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="flex gap-4 group"
+              >
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                  <h.icon className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-heading font-bold text-foreground mb-1">{h.title}</h3>
+                  <p className="text-muted-foreground text-sm">{h.desc}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
-        ))}
+        </motion.div>
+
+        {/* Right: stats with bold design */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="bg-dark-section rounded-3xl p-10 md:p-14 relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-40 h-40 bg-primary/10 rounded-full blur-[80px]" />
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-secondary/10 rounded-full blur-[60px]" />
+          
+          <div className="relative z-10 space-y-10">
+            {stats.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15 }}
+              >
+                <div className="font-heading text-5xl md:text-6xl font-bold text-gradient mb-1">
+                  <Counter target={stat.value} suffix={stat.suffix} />
+                </div>
+                <p className="text-secondary-foreground/60 font-medium text-sm uppercase tracking-wider">{stat.label}</p>
+                {i < stats.length - 1 && <div className="h-px bg-secondary-foreground/10 mt-8" />}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </div>
   </section>
